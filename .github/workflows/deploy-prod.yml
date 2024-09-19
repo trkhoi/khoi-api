@@ -7,7 +7,7 @@ on:
 
 jobs:
   setup-build:
-    name: Setup and Build
+    name: Setup and Build Prod env
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Source
@@ -16,15 +16,15 @@ jobs:
       run: echo "PORT=${{ secrets.PORT }}" >> .env
     - name: Login to docker hub
       run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-    - name: Build Docker Image
+    - name: Build Docker Image Prod
       run: docker build -t kn11299/khoi-api .
-    - name: Push Docker Image
+    - name: Push Docker Image Prod
       run: docker push kn11299/khoi-api:latest
   deploy:
     needs: setup-build
     runs-on: self-hosted
     steps:
-    - name: Pull Docker Image
+    - name: Pull Docker Image Prod
       run: docker pull kn11299/khoi-api:latest
     - name: Delete old container
       run: docker rm -f khoi-api-containter
