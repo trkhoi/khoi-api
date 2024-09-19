@@ -1,0 +1,24 @@
+name: Unit test on pull requests
+on: [pull_request]
+jobs:
+  setup-test:
+    name: Setup env test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create .env test file
+      run: echo "PORT=${{ secrets.PORT }}" >> .env
+    - name: 
+  test:
+    needs: setup-test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get action
+      uses: actions/checkout@v3
+    - name: Setup Golang with cache
+        uses: magnetikonline/action-golang-cache@v4
+        with:
+          go-version-file: go.mod
+    - name: Install dependencies
+      run: go mod tidy
+    - name: Run tests
+      run: go test -v ./...
