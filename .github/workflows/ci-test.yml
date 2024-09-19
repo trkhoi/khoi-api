@@ -2,17 +2,12 @@ name: Unit test on pull requests
 on: [pull_request]
 
 jobs:
-  setup-test:
+  ci-test:
     name: Setup env test
     runs-on: ubuntu-latest
     steps:
     - name: Create .env test file
       run: echo "PORT=${{ secrets.PORT }}" >> .env
-    - name: 
-  test:
-    needs: setup-test
-    runs-on: ubuntu-latest
-    steps:
     - name: Get action
       uses: actions/checkout@v3
     - name: Setup Golang with cache
