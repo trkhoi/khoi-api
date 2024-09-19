@@ -9,7 +9,7 @@ jobs:
     - name: Get action
       uses: actions/checkout@v3
     - name: Setup Golang with cache
-        uses: magnetikonline/action-golang-cache@v4
+      uses: magnetikonline/action-golang-cache@v4
         with:
           go-version-file: go.mod
     - name: Install dependencies
