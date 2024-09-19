@@ -1,0 +1,31 @@
+name: Khoi Api Dev CICD
+on:
+  push:
+    branches:
+    - develop
+
+jobs:
+  setup-build:
+    name: Setup and Build Dev env
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Source
+      uses: action/checkout@v4
+    - name: Create .env file
+      run: echo "PORT=${{ secrets.PORT }}" >> .env
+    - name: Login to docker hub
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+    - name: Build Docker Image Dev
+      run: docker build -t kn11299/khoi-api-dev .
+    - name: Push Docker Image Dev
+      run: docker push kn11299/khoi-api-dev:latest
+  deploy:
+    needs: setup-build
+    runs-on: self-hosted
+    steps:
+    - name: Pull Docker Image Dev
+      run: docker pull kn11299/khoi-api-dev:latest
+    - name: Delete old container
+      run: docker rm -f khoi-api-containter-dev
+    - name: Run docker container
+      run: docker run -d -p 8085:8085 --name khoi-api-containter-dev kn11299/khoi-api-dev:latest
