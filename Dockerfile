@@ -1,9 +1,17 @@
-FROM golang:1.19-alpine
-WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod tidy
+
+FROM --platform=linux/amd64 golang:1.19-alpine as builder
+
+RUN mkdir -p /app/api
+WORKDIR /app/api
+
+ENV GOOS=linux CGO_ENABLED=1
+
+RUN set -ex && \
+  apk add --no-progress --no-cache \
+  gcc \
+  musl-dev 
 COPY . .
-RUN go build -o main ./main.go
-RUN chmod +x main
+RUN go install --tags musl ./...
 EXPOSE 8085
-CMD [ "./main" ]
+
+CMD [ "api" ]
