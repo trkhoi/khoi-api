@@ -1,0 +1,12 @@
+name: Commitlint to check dev commit
+on: [pull_request]
+
+jobs:
+  commitlint:
+    name: Commitlint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: wagoid/commitlint-github-action@v6
