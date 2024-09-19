@@ -1,5 +1,5 @@
 name: Commitlint to check dev commit
-on: [pull_requests]
+on: [pull_request]
 
 jobs:
   commitlint:
