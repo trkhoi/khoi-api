@@ -10,7 +10,7 @@ import (
 	"github.com/trkhoi/khoi-api/internal/appmain"
 )
 
-// BindService creates the backend service and binds it to the serving harness.
+// BindService creates the backend service and binds it to the serving harness..
 func BindService(p *appmain.Params, b *appmain.Bindings) appmain.IServer {
 	router := setupRouter(p)
 	h := handler.New(p)
