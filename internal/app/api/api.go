@@ -11,7 +11,7 @@ import (
 )
 
 // BindService creates the backend service and binds it to the serving harness.......
-// cmt
+// cmt .
 func BindService(p *appmain.Params, b *appmain.Bindings) appmain.IServer {
 	router := setupRouter(p)
 	h := handler.New(p)
